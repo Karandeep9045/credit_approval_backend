@@ -22,10 +22,10 @@ services:
     command: >
       sh -c "python manage.py migrate &&
              python manage.py injest_data &&
-             echo '======================================================' &&
-             echo 'Django project is running. Access it here:' &&
-             echo 'http://localhost:8000/' &&
-             echo '======================================================' &&
+              echo '======================================================' &&
+              echo '🚀 Django project is running. Access it here:' &&
+              echo '🔗 http://localhost:8000/' &&
+              echo '======================================================' &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
