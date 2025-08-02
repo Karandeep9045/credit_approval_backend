@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=credit_db
+      - POSTGRES_USER=django_user
+      - POSTGRES_PASSWORD=django_pass
+    networks:
+      - django_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U django_user -d credit_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py injest_data &&
+             echo '======================================================' &&
+             echo 'Django project is running. Access it here:' &&
+             echo 'http://localhost:8000/' &&
+             echo '======================================================' &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=credit_db
+      - DB_USER=django_user
+      - DB_PASS=django_pass
+    depends_on:
+      db:
+        condition: service_healthy
+    working_dir: /app/credit_system
+    networks:
+      - django_network
+
+networks:
+  django_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
