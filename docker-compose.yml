@@ -9,6 +9,8 @@ services:
       - POSTGRES_DB=credit_db
       - POSTGRES_USER=django_user
       - POSTGRES_PASSWORD=django_pass
+      - LANG=en_US.utf8
+      - LC_ALL=en_US.utf8
     networks:
       - django_network
     healthcheck:
