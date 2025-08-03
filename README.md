@@ -8,7 +8,6 @@ A sophisticated Django REST API system for managing customer credit applications
 
 - **Django REST Framework**: API endpoints and serialization
 - **PostgreSQL**: Primary database for customer and loan data
-- **Celery + Redis**: Background task processing for data ingestion
 - **Credit Scoring Engine**: Intelligent loan approval algorithm
 - **Excel Data Ingestion**: Automated import from Excel files
 
@@ -46,7 +45,6 @@ docker compose up --build
 
 - The Django app will be available at [http://localhost:8000](http://localhost:8000)
 - The PostgreSQL database and all migrations will be handled automatically.
-- Data persistence is managed via Docker volumes.
 
 ### 3. Stopping the Application
 
